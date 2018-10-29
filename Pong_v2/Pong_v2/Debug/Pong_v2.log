@@ -1,0 +1,24 @@
+﻿  PongMain.cpp
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(65): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(76): warning C4305: 'initializing': truncation from 'double' to 'float'
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(78): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(78): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(79): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(79): warning C4305: 'initializing': truncation from 'double' to 'float'
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(80): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(80): warning C4305: 'initializing': truncation from 'double' to 'float'
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(139): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(140): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(153): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(154): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(155): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(156): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(159): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(160): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(161): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(162): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(165): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(166): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(167): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\visual studio 2017\myprojects\pong_v2\pong_v2\pongmain.cpp(168): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Pong_v2.vcxproj -> e:\Users\Commander Shepard\Documents\Visual Studio 2017\MyProjects\Pong_v2\Debug\Pong_v2.exe
