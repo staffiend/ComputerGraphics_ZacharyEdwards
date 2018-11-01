@@ -1,20 +1,36 @@
 #pragma once
 #include "basic_data.h"
 #include "game.h"
+#include "animation.h"
 #include "SDL2-2.0.8\include\SDL.h"
 #include "SDL2-2.0.8\include\SDL_image.h"
 
+int getTileID( int y, int x, int **table )
+{
+	if ( x >= 0 && x < 30 && y >= 0 && y < 24 )
+	{
+		return table[y][x];
+	}
+	else
+	{
+		return 1000;
+	}
+}
 
 namespace Agent
 {
 	struct Agent
 	{
 		Vec2D pos;
+		Vec2D nextPos;
 		Size size;
 		Vec2D force;
 		Vec2D velocity;
 		float mass;
+		int xOffset;
+		int yOffset;
 		int state;
+		bool isGrounded;
 		const char *sprite_filename;
 		SDL_Surface *sprite_surface;
 		SDL_Texture *sprite_texture;
@@ -22,18 +38,22 @@ namespace Agent
 
 	void init( Agent *a, const char *filename )
 	{
-		a->pos = { 50, 50 };
+		a->pos = {};
+		a->nextPos = {};
 		a->size = {};
 		a->force = {};
 		a->velocity = {};
 		a->mass = 1.0;
+		a->xOffset = 0;
+		a->yOffset = 0;
 		a->state = 0;
+		a->isGrounded = false;
 		a->sprite_surface = IMG_Load( filename );
 		a->sprite_texture = SDL_CreateTextureFromSurface( Game::renderer, a->sprite_surface );
 		SDL_FreeSurface( a->sprite_surface );
 	}
 
-	void physics_update( Agent *a, float time )
+	void update( Agent *a, float time )
 	{
 		Vec2D acceleration;
 		acceleration.x = a->force.x / a->mass;
@@ -46,7 +66,99 @@ namespace Agent
 
 	void add_force( Agent *a, Vec2D force )
 	{
-		a->force.x += force.x;
-		a->force.y += force.y;
+		a->force.x += force.x / a->mass;
+		a->force.y += force.y / a->mass;
 	}
+
+	void collision_update( Agent *a, float time, int **table )
+	{
+		a->nextPos.x = a->pos.x + a->velocity.x * time;
+		a->nextPos.y = a->pos.y + a->velocity.y * time;
+
+		int xCell = (int)(a->pos.x + a->size.w + a->xOffset) / 30;
+		int yCell = (int)(a->pos.y + a->size.h + a->yOffset) / 24;
+
+		if ( a->pos.x <= 0 || a->pos.x + a->size.w > Game::screen_width )
+		{
+			a->velocity.x *= -1;
+		}
+
+		//this always causes a collision when moving sideways, probably because it registers a collision with the bottom tiles constantly, don't know how to fix yet
+		if ( a->velocity.x <= 0 )
+		{
+			if ( getTileID( yCell + 0.0, xCell + 0.0, table ) != -1 || getTileID( yCell + 0.0, xCell + 0.9, table ) != -1 )
+			{
+				//a->velocity.x = 0.0;
+			}
+		}
+		else
+		{
+			if ( getTileID( yCell + 1.0, xCell, table ) != -1 || getTileID( yCell + 1.0, xCell + 0.9, table ) != -1 )
+			{
+				//a->velocity.x = 0.0;
+			}
+		}
+
+		if ( a->velocity.y <= 0 )
+		{
+			if ( getTileID( yCell, xCell, table ) != -1 || getTileID( yCell, xCell, table ) != -1 )
+			{
+			}
+		}
+		else
+		{
+			if ( getTileID( yCell, xCell, table ) != -1 || getTileID( yCell, xCell, table ) != -1 )
+			{
+				a->velocity.y = 0.0;
+				a->isGrounded = true;
+			}
+		}
+	}
+
+	/*void draw_update( Agent *a, Animation::Animation *idle_anim, Animation::Animation *moving_anim, Animation::Animation *dancing_anim, Animation::Animation *other_anim, int scale_value, int time, Vec2D force_left, Vec2D force_right, int facing_direction )
+	{
+		if ( a->state == a->idle )
+		{
+			Animation::PlayLoop( idle_anim, a->sprite_texture, a->pos.x, a->pos.y, idle_anim->width * scale_value, idle_anim->height * scale_value, time );
+			a->velocity.x = 0.0;
+		}
+		if ( a->state == a->moving_left )
+		{
+			if ( facing_direction == 0 )
+			{
+				Animation::PlayLoop( moving_anim, a->sprite_texture, a->pos.x, a->pos.y, moving_anim->width * scale_value, moving_anim->height * scale_value, time );
+			}
+			else
+			{
+				Animation::PlayLoopFlipped( moving_anim, a->sprite_texture, a->pos.x, a->pos.y, moving_anim->width * scale_value, moving_anim->height * scale_value, time );
+			}
+
+			add_force( a, force_left );
+		}
+		if ( a->state == a->moving_right )
+		{
+			if ( facing_direction == 1 )
+			{
+				Animation::PlayLoop( moving_anim, a->sprite_texture, a->pos.x, a->pos.y, moving_anim->width * scale_value, moving_anim->height * scale_value, time );
+			}
+			else
+			{
+				Animation::PlayLoopFlipped( moving_anim, a->sprite_texture, a->pos.x, a->pos.y, moving_anim->width * scale_value, moving_anim->height * scale_value, time );
+			}
+
+			add_force( a, force_right );
+		}
+		if ( a->state == a->dancing )
+		{
+			Animation::PlayLoop( dancing_anim, a->sprite_texture, a->pos.x, a->pos.y, dancing_anim->width * scale_value, dancing_anim->height * scale_value, time );
+			a->velocity.x = 0.0;
+		}
+		if ( a->state == a->other )
+		{
+			Animation::PlayLoop( other_anim, a->sprite_texture, a->pos.x, a->pos.y, other_anim->width * scale_value, other_anim->height * scale_value, time );
+			a->velocity.x = 0.0;
+		}
+	}*/
+
+	
 }

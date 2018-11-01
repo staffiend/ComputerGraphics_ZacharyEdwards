@@ -40,8 +40,21 @@ namespace Animation
 		SDL_Rect src = { anim->starting_pos.x + anim->current_frame * anim->width, anim->starting_pos.y, anim->width, anim->height };
 		SDL_Rect dest = { dest_x, dest_y, dest_width, dest_height };
 
-
 		SDL_RenderCopyEx( Game::renderer, texture, &src, &dest, 0, NULL, SDL_FLIP_NONE );
+	}
+
+	void PlayLoopFlipped( Animation *anim, SDL_Texture *texture, float dest_x, float dest_y, int dest_width, int dest_height, int current_time )
+	{
+		if ( current_time - anim->last_frame_change_time > anim->frame_duration )
+		{
+			anim->current_frame = (anim->current_frame + 1) % anim->frames;
+			anim->last_frame_change_time = current_time;
+		}
+
+		SDL_Rect src = { anim->starting_pos.x + anim->current_frame * anim->width, anim->starting_pos.y, anim->width, anim->height };
+		SDL_Rect dest = { dest_x, dest_y, dest_width, dest_height };
+
+		SDL_RenderCopyEx( Game::renderer, texture, &src, &dest, 0, NULL, SDL_FLIP_HORIZONTAL );
 	}
 
 	void PlayOnce( Animation *anim, SDL_Texture *texture, float dest_x, float dest_y, int dest_width, int dest_height, int current_time )
@@ -54,7 +67,6 @@ namespace Animation
 
 		SDL_Rect src = { anim->starting_pos.x + anim->current_frame * anim->width, anim->starting_pos.y, anim->width, anim->height };
 		SDL_Rect dest = { dest_x, dest_y, dest_width, dest_height };
-
 
 		SDL_RenderCopyEx( Game::renderer, texture, &src, &dest, 0, NULL, SDL_FLIP_NONE );
 	}
