@@ -30,7 +30,9 @@ namespace Agent
 		int xOffset;
 		int yOffset;
 		int state;
+		int time_since_state_change;
 		bool isGrounded;
+		bool has_sound_played;
 		const char *sprite_filename;
 		SDL_Surface *sprite_surface;
 		SDL_Texture *sprite_texture;
@@ -47,7 +49,9 @@ namespace Agent
 		a->xOffset = 0;
 		a->yOffset = 0;
 		a->state = 0;
+		a->time_since_state_change = 0;
 		a->isGrounded = false;
+		a->has_sound_played = false;
 		a->sprite_surface = IMG_Load( filename );
 		a->sprite_texture = SDL_CreateTextureFromSurface( Game::renderer, a->sprite_surface );
 		SDL_FreeSurface( a->sprite_surface );
@@ -109,56 +113,11 @@ namespace Agent
 		{
 			if ( getTileID( yCell, xCell, table ) != -1 || getTileID( yCell, xCell, table ) != -1 )
 			{
+				a->pos.y = a->pos.y;
 				a->velocity.y = 0.0;
 				a->isGrounded = true;
 			}
 		}
 	}
-
-	/*void draw_update( Agent *a, Animation::Animation *idle_anim, Animation::Animation *moving_anim, Animation::Animation *dancing_anim, Animation::Animation *other_anim, int scale_value, int time, Vec2D force_left, Vec2D force_right, int facing_direction )
-	{
-		if ( a->state == a->idle )
-		{
-			Animation::PlayLoop( idle_anim, a->sprite_texture, a->pos.x, a->pos.y, idle_anim->width * scale_value, idle_anim->height * scale_value, time );
-			a->velocity.x = 0.0;
-		}
-		if ( a->state == a->moving_left )
-		{
-			if ( facing_direction == 0 )
-			{
-				Animation::PlayLoop( moving_anim, a->sprite_texture, a->pos.x, a->pos.y, moving_anim->width * scale_value, moving_anim->height * scale_value, time );
-			}
-			else
-			{
-				Animation::PlayLoopFlipped( moving_anim, a->sprite_texture, a->pos.x, a->pos.y, moving_anim->width * scale_value, moving_anim->height * scale_value, time );
-			}
-
-			add_force( a, force_left );
-		}
-		if ( a->state == a->moving_right )
-		{
-			if ( facing_direction == 1 )
-			{
-				Animation::PlayLoop( moving_anim, a->sprite_texture, a->pos.x, a->pos.y, moving_anim->width * scale_value, moving_anim->height * scale_value, time );
-			}
-			else
-			{
-				Animation::PlayLoopFlipped( moving_anim, a->sprite_texture, a->pos.x, a->pos.y, moving_anim->width * scale_value, moving_anim->height * scale_value, time );
-			}
-
-			add_force( a, force_right );
-		}
-		if ( a->state == a->dancing )
-		{
-			Animation::PlayLoop( dancing_anim, a->sprite_texture, a->pos.x, a->pos.y, dancing_anim->width * scale_value, dancing_anim->height * scale_value, time );
-			a->velocity.x = 0.0;
-		}
-		if ( a->state == a->other )
-		{
-			Animation::PlayLoop( other_anim, a->sprite_texture, a->pos.x, a->pos.y, other_anim->width * scale_value, other_anim->height * scale_value, time );
-			a->velocity.x = 0.0;
-		}
-	}*/
-
 	
 }
