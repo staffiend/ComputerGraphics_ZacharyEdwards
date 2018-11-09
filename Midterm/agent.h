@@ -87,22 +87,6 @@ namespace Agent
 			a->velocity.x *= -1;
 		}
 
-		//this always causes a collision when moving sideways, probably because it registers a collision with the bottom tiles constantly, don't know how to fix yet
-		if ( a->velocity.x <= 0 )
-		{
-			if ( getTileID( yCell + 0.0, xCell + 0.0, table ) != -1 || getTileID( yCell + 0.0, xCell + 0.9, table ) != -1 )
-			{
-				//a->velocity.x = 0.0;
-			}
-		}
-		else
-		{
-			if ( getTileID( yCell + 1.0, xCell, table ) != -1 || getTileID( yCell + 1.0, xCell + 0.9, table ) != -1 )
-			{
-				//a->velocity.x = 0.0;
-			}
-		}
-
 		if ( a->velocity.y <= 0 )
 		{
 			if ( getTileID( yCell, xCell, table ) != -1 || getTileID( yCell, xCell, table ) != -1 )
@@ -119,5 +103,4 @@ namespace Agent
 			}
 		}
 	}
-	
 }

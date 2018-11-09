@@ -51,6 +51,9 @@ int main( int argc, char **argv )
 
 	const char *dynamo_sprites = "dynamo.png";
 
+	const char *chun_voice_file = "chun_talk_01.wav";
+	const char *ken_voice_file = "ken_talk_01.wav";
+
 	//tileset file
 	const char *tileset_filename = "midterm_map.png";
 
@@ -68,6 +71,8 @@ int main( int argc, char **argv )
 	Mix_Chunk *ken_hadouken = Mix_LoadWAV( ken_hadouken_file );
 	Mix_Chunk *charlotte_magic = Mix_LoadWAV( charlotte_magic_file );
 	Mix_Chunk *dracula_sound = Mix_LoadWAV( dracula_sound_file );
+	Mix_Chunk *chun_voice = Mix_LoadWAV( chun_voice_file );
+	Mix_Chunk *ken_voice = Mix_LoadWAV( ken_voice_file );
 
 	SDL_Window *window = SDL_CreateWindow( "Party!!!!!!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Game::screen_width, Game::screen_height, SDL_WINDOW_SHOWN );
 
@@ -144,17 +149,28 @@ int main( int argc, char **argv )
 	bool ending_state = false;
 
 	//initialize agents, animations, and particle effects
-	Vec2D f_min = { 0.0, -0.001 };
-	Vec2D f_max = { 0.1, -0.005 };
+	//fog machines
+	Vec2D fog_min = { 0.0, -0.001 };
+	Vec2D fog_max = { 0.1, -0.005 };
 	Particle_Emitter::Particle_Emitter fog_machine;
-	Particle_Emitter::init( &fog_machine, 1000 );
+	Particle_Emitter::init( &fog_machine, 1200 );
 	fog_machine.emitter_pos.x = 0;
 	fog_machine.emitter_pos.y = 675;
 	fog_machine.particle_color = { 200, 200, 200 };
-	fog_machine.particle_size = 4;
+	fog_machine.particle_size = 3.5;
 
-	Vec2D s_min = { -0.5, -0.1 };
-	Vec2D s_max = { 0.5, 0.1 };
+	Vec2D fog_ceiling_min = { -0.1, 0.01 };
+	Vec2D fog_ceiling_max = { 0.1, 0.01 };
+	Particle_Emitter::Particle_Emitter fog_machine_ceiling;
+	Particle_Emitter::init( &fog_machine_ceiling, 2000 );
+	fog_machine_ceiling.emitter_pos.x = Game::screen_width / 2;
+	fog_machine_ceiling.emitter_pos.y = 1;
+	fog_machine_ceiling.particle_color = { 200, 200, 200 };
+	fog_machine_ceiling.particle_size = 3.5;
+
+	//sparks
+	Vec2D sparks_min = { -0.5, -0.1 };
+	Vec2D sparks_max = { 0.5, 0.1 };
 	Particle_Emitter::Particle_Emitter sparks_one;
 	Particle_Emitter::init( &sparks_one, 20 );
 	sparks_one.emitter_pos.x = 120;
@@ -183,8 +199,9 @@ int main( int argc, char **argv )
 	sparks_four.particle_color = { 255, 190, 0 };
 	sparks_four.particle_size = 2;
 
-	Vec2D b_min = { -0.001, 0.01 };
-	Vec2D b_max = { 0.001, 0.1 };
+	//blood
+	Vec2D blood_min = { -0.001, 0.01 };
+	Vec2D blood_max = { 0.001, 0.1 };
 	Particle_Emitter::Particle_Emitter blood_one;
 	Particle_Emitter::init( &blood_one, 10 );
 	blood_one.emitter_pos.x = 630;
@@ -199,20 +216,49 @@ int main( int argc, char **argv )
 	blood_two.particle_color = { 200, 0, 0 };
 	blood_two.particle_size = 3;
 
-	Vec2D w_min = { -0.01, -0.05 };
-	Vec2D w_max = { 0.01, -0.08 };
+	//fountain
+	Vec2D water_min = { -0.01, -0.05 };
+	Vec2D water_max = { 0.01, -0.08 };
 	Particle_Emitter::Particle_Emitter fountain;
 	Particle_Emitter::init( &fountain, 1000 );
 	fountain.emitter_pos.x = 80;
 	fountain.emitter_pos.y = 585;
 	fountain.particle_color = { 0, 50, 220 };
 	fountain.particle_size = 1.25;
+
+	//fire
+	Vec2D fire_left_min = { -0.0003, -0.01 };
+	Vec2D fire_left_max = { -0.005, -0.015 };
+	Particle_Emitter::Particle_Emitter fire_left;
+	Particle_Emitter::init( &fire_left, 100 );
+	fire_left.emitter_pos.x = 313;
+	fire_left.emitter_pos.y = 222;
+	fire_left.particle_color = { 250, 60, 0 };
+	fire_left.particle_size = 2;
+
+	Vec2D fire_right_min = { 0.0003, -0.01 };
+	Vec2D fire_right_max = { 0.005, -0.015 };
+	Particle_Emitter::Particle_Emitter fire_right;
+	Particle_Emitter::init( &fire_right, 100 );
+	fire_right.emitter_pos.x = 317;
+	fire_right.emitter_pos.y = 222;
+	fire_right.particle_color = { 250, 60, 0 };
+	fire_right.particle_size = 2;
+
+	Vec2D fire_core_min = { -0.0009, -0.013 };
+	Vec2D fire_core_max = { 0.0009, -0.018 };
+	Particle_Emitter::Particle_Emitter fire_core;
+	Particle_Emitter::init( &fire_core, 100 );
+	fire_core.emitter_pos.x = 315;
+	fire_core.emitter_pos.y = 222;
+	fire_core.particle_color = { 245, 235, 40 };
+	fire_core.particle_size = 2;
 	
 	//mega man x agent and animations
 	Agent::Agent mmx;
 	Agent::init( &mmx, mmx_image_filename );
 	mmx.pos = { 100, 150 };
-	mmx.size.w = 48;
+	mmx.size.w = 64;
 	mmx.size.h = 48;
 	mmx.mass = 10;
 	mmx.yOffset = -24;
@@ -220,7 +266,7 @@ int main( int argc, char **argv )
 	Animation::Animation mmx_idle;
 	Animation::init( &mmx_idle, 0, 0, 3, 34, 44, 250 );
 	Animation::Animation mmx_dance;
-	Animation::init( &mmx_dance, 0, 132, 9, 34, 44, 100 );
+	Animation::init( &mmx_dance, 0, 132, 9, 34, 44, 85 );
 	Animation::Animation mmx_move;
 	Animation::init( &mmx_move, 0, 44, 10, 34, 44, 100 );
 	Animation::Animation mmx_other;
@@ -230,7 +276,7 @@ int main( int argc, char **argv )
 	Agent::Agent ken;
 	Agent::init( &ken, ken_sprites );
 	ken.pos = { 150, 555 };
-	ken.size.w = 100;
+	ken.size.w = 110;
 	ken.size.h = 120;
 	ken.mass = 15;
 	Animation::Animation ken_idle;
@@ -243,18 +289,25 @@ int main( int argc, char **argv )
 	Animation::init( &ken_other, 0, 360, 6, 140, 120, 100 );
 
 	//ken's fire hadouken of legend
-	Vec2D hado_min = { -0.002, -0.0007 };
-	Vec2D hado_max = { -0.007, 0.0007 };
-	Particle_Emitter::Particle_Emitter fire_hadouken;
-	Particle_Emitter::init( &fire_hadouken, 2000 );
-	fire_hadouken.particle_color = { 250, 120, 0 };
-	fire_hadouken.particle_size = 3;
+	Vec2D hado_left_min = { -0.002, -0.0007 };
+	Vec2D hado_left_max = { -0.007, 0.0007 };
+	Particle_Emitter::Particle_Emitter fire_hadouken_left;
+	Particle_Emitter::init( &fire_hadouken_left, 4000 );
+	fire_hadouken_left.particle_color = { 250, 120, 0 };
+	fire_hadouken_left.particle_size = 3;
+
+	Vec2D hado_right_min = { 0.002, -0.0007 };
+	Vec2D hado_right_max = { 0.007, 0.0007 };
+	Particle_Emitter::Particle_Emitter fire_hadouken_right;
+	Particle_Emitter::init( &fire_hadouken_right, 4000 );
+	fire_hadouken_right.particle_color = { 250, 120, 0 };
+	fire_hadouken_right.particle_size = 3;
 
 	//chun agent and animations
 	Agent::Agent chun;
 	Agent::init( &chun, chun_sprites );
 	chun.pos = { 300, 555 };
-	chun.size.w = 120;
+	chun.size.w = 150;
 	chun.size.h = 120;
 	chun.mass = 12;
 	Animation::Animation chun_idle;
@@ -262,15 +315,15 @@ int main( int argc, char **argv )
 	Animation::Animation chun_move;
 	Animation::init( &chun_move, 0, 120, 9, 190, 120, 100 );
 	Animation::Animation chun_dance;
-	Animation::init( &chun_dance, 0, 240, 10, 190, 120, 100 );
+	Animation::init( &chun_dance, 0, 240, 10, 190, 120, 80 );
 	Animation::Animation chun_other;
-	Animation::init( &chun_other, 0, 360, 20, 190, 120, 100 );
+	Animation::init( &chun_other, 0, 360, 20, 190, 120, 90 );
 
 	//charlotte agent and animations
 	Agent::Agent charlotte;
 	Agent::init( &charlotte, charlotte_sprites );
 	charlotte.pos = { 700, 100 };
-	charlotte.size.w = 65;
+	charlotte.size.w = 75;
 	charlotte.size.h = 32;
 	charlotte.mass = 10;
 	charlotte.yOffset = 8;
@@ -284,14 +337,21 @@ int main( int argc, char **argv )
 	Animation::init( &charlotte_other, 0, 156, 4, 36, 52, 100 );
 
 	//charlotte's magic
-	Vec2D m_min = { -0.005, -0.007 };
-	Vec2D m_max = { 0.005, -0.009 };
+	Vec2D magic_min = { -0.005, -0.0007 };
+	Vec2D magic_max = { 0.005, -0.0009 };
 	Particle_Emitter::Particle_Emitter magic;
 	Particle_Emitter::init( &magic, 150 );
 	magic.emitter_pos.x = charlotte.pos.x + 30;
 	magic.emitter_pos.y = charlotte.pos.y - 10;
 	magic.particle_color = { 200, 0, 250 };
 	magic.particle_size = 1;
+
+	Vec2D magic_core_min = { -0.0005, -0.001 };
+	Vec2D magic_core_max = { 0.0005, -0.009 };
+	Particle_Emitter::Particle_Emitter magic_core;
+	Particle_Emitter::init( &magic_core, 200 );
+	magic_core.particle_color = { 20, 150, 230 };
+	magic_core.particle_size = 1.2;
 
 	//dracula agent and animations
 	Agent::Agent dracula;
@@ -300,7 +360,7 @@ int main( int argc, char **argv )
 	dracula.size.w = 50;
 	dracula.size.h = 100;
 	Animation::Animation vlad_idle;
-	Animation::init( &vlad_idle, 0, 0, 7, 100, 100, 100 );
+	Animation::init( &vlad_idle, 0, 0, 7, 100, 100, 90 );
 
 	//blood dripping from vlad tepes dracula's mouth
 	Particle_Emitter::Particle_Emitter blood_drac;
@@ -314,36 +374,36 @@ int main( int argc, char **argv )
 	Agent::Agent soma;
 	Agent::init( &soma, soma_sprites );
 	soma.pos = { 350, 100 };
-	soma.size.w = 75;
+	soma.size.w = 120;
 	soma.size.h = 32;
 	soma.mass = 9;
 	soma.yOffset = -18;
 	Animation::Animation soma_idle;
 	Animation::init( &soma_idle, 0, 0, 4, 60, 40, 100 );
 	Animation::Animation soma_move;
-	Animation::init( &soma_move, 0, 40, 4, 60, 40, 100 );
+	Animation::init( &soma_move, 0, 40, 4, 60, 40, 80 );
 	Animation::Animation soma_dance;
 	Animation::init( &soma_dance, 0, 80, 6, 60, 40, 100 );
 	Animation::Animation soma_other;
-	Animation::init( &soma_other, 0, 120, 5, 60, 40, 100 );
+	Animation::init( &soma_other, 0, 120, 5, 60, 40, 90 );
 	Animation::Animation soma_death;
 	Animation::init( &soma_death, 0, 160, 4, 60, 40, 100 );
 
 	//dynamo agent and animations
 	Agent::Agent dynamo;
 	Agent::init( &dynamo, dynamo_sprites );
-	dynamo.pos = { 220, 555 };
-	dynamo.size.w = 60;
+	dynamo.pos = { 250, 555 };
+	dynamo.size.w = 70;
 	dynamo.size.h = 48;
 	dynamo.mass = 10;
 	Animation::Animation dynamo_idle;
-	Animation::init( &dynamo_idle, 0, 0, 9, 90, 120, 100 );
+	Animation::init( &dynamo_idle, 0, 0, 9, 90, 120, 95 );
 	Animation::Animation dynamo_move;
 	Animation::init( &dynamo_move, 0, 120, 6, 90, 120, 100 );
 	Animation::Animation dynamo_dance;
-	Animation::init( &dynamo_dance, 0, 240, 4, 90, 120, 100 );
+	Animation::init( &dynamo_dance, 0, 240, 4, 90, 120, 90 );
 	Animation::Animation dynamo_other;
-	Animation::init( &dynamo_other, 0, 360, 9, 90, 120, 100 );
+	Animation::init( &dynamo_other, 0, 360, 9, 90, 120, 95 );
 
 	//physics forces
 	Vec2D gravity = { 0.0, 0.0005 };
@@ -352,9 +412,6 @@ int main( int argc, char **argv )
 	Vec2D friction_force_left = { -0.0005, 0.0 };
 	Vec2D friction_force_right = { 0.0005, 0.0 };
 	float max_horizontal_velocity = 0.1;
-
-	unsigned char prev_key_state[256];
-	unsigned char *keys = (unsigned char*)SDL_GetKeyboardState( NULL );
 
 	int current_time = 0;
 	int time_since_song_change = 0;
@@ -406,7 +463,6 @@ int main( int argc, char **argv )
 	while ( !done )
 	{
 		Uint32 current_time = SDL_GetTicks();
-		memcpy( prev_key_state, keys, 256 );
 
 		//consume all window events first
 		SDL_Event event;
@@ -416,25 +472,7 @@ int main( int argc, char **argv )
 			{
 				done = true;
 			}
-			else if ( event.type == SDL_KEYDOWN )
-			{
-				if ( event.key.keysym.sym == SDLK_n )
-				{
-					Mix_HaltMusic();
-					playlist_index++;
-				}
-			}
 		}
-
-		int cmd_up = 0;
-		int cmd_down = 0;
-		int cmd_right = 0;
-		int cmd_left = 0;
-
-		if ( keys[SDL_SCANCODE_W] ) cmd_up = 1;
-		if ( keys[SDL_SCANCODE_S] ) cmd_down = 1;
-		if ( keys[SDL_SCANCODE_A] ) cmd_left = 1;
-		if ( keys[SDL_SCANCODE_D] ) cmd_right = 1;
 
 		if ( ending_state == false )
 		{
@@ -468,6 +506,7 @@ int main( int argc, char **argv )
 		//every frame
 		//clear forces
 		Particle_Emitter::clear_Forces_from_Particles( &fog_machine );
+		Particle_Emitter::clear_Forces_from_Particles( &fog_machine_ceiling );
 		Particle_Emitter::clear_Forces_from_Particles( &sparks_one );
 		Particle_Emitter::clear_Forces_from_Particles( &sparks_two );
 		Particle_Emitter::clear_Forces_from_Particles( &blood_one );
@@ -661,59 +700,85 @@ int main( int argc, char **argv )
 		}
 
 		//spawn particles and physics/collision updates
-		Particle_Emitter::spawn_Many( &fog_machine, f_min, f_max, 1, 500, 2000 );
+		Particle_Emitter::spawn_Many( &fog_machine, fog_min, fog_max, 1, 500, 2000 );
 		Particle_Emitter::update( &fog_machine, 1.0 );
 
-		Particle_Emitter::spawn_Many( &sparks_one, s_min, s_max, 1, 20, 40 );
+		Particle_Emitter::spawn_Many( &fog_machine_ceiling, fog_ceiling_min, fog_ceiling_max, 2, 500, 2000 );
+		Particle_Emitter::update( &fog_machine_ceiling, 1.0 );
+
+		Particle_Emitter::spawn_Many( &sparks_one, sparks_min, sparks_max, 1, 20, 40 );
 		Particle_Emitter::update( &sparks_one, 1.0 );
 
-		Particle_Emitter::spawn_Many( &sparks_two, s_min, s_max, 1, 20, 40 );
+		Particle_Emitter::spawn_Many( &sparks_two, sparks_min, sparks_max, 1, 20, 40 );
 		Particle_Emitter::update( &sparks_two, 1.0 );
 
-		Particle_Emitter::spawn_Many( &sparks_three, s_min, s_max, 2, 5, 10 );
+		Particle_Emitter::spawn_Many( &sparks_three, sparks_min, sparks_max, 2, 5, 10 );
 		Particle_Emitter::update( &sparks_three, 1.0 );
 
-		Particle_Emitter::spawn_Many( &sparks_four, s_min, s_max, 2, 5, 10 );
+		Particle_Emitter::spawn_Many( &sparks_four, sparks_min, sparks_max, 2, 5, 10 );
 		Particle_Emitter::update( &sparks_four, 1.0 );
 
-		Particle_Emitter::spawn_Many( &blood_one, b_min, b_max, 1, 10, 20 );
+		Particle_Emitter::spawn_Many( &blood_one, blood_min, blood_max, 1, 10, 20 );
 		Particle_Emitter::update( &blood_one, 1.0 );
 
-		Particle_Emitter::spawn_Many( &blood_two, b_min, b_max, 1, 10, 20 );
+		Particle_Emitter::spawn_Many( &blood_two, blood_min, blood_max, 1, 10, 20 );
 		Particle_Emitter::update( &blood_two, 1.0 );
 
-		Particle_Emitter::spawn_Many( &fountain, w_min, w_max, 100, 200, 350 );
+		Particle_Emitter::spawn_Many( &fountain, water_min, water_max, 100, 200, 350 );
 		Particle_Emitter::update( &fountain, 1.0 );
 
-		Particle_Emitter::spawn_Many( &magic, m_min, m_max, 25, 25, 50 );
+		Particle_Emitter::spawn_Many( &magic, magic_min, magic_max, 25, 25, 50 );
 		Particle_Emitter::update( &magic, 1.0 );
 
-		Particle_Emitter::spawn_Many( &fire_hadouken, hado_min, hado_max, 700, 200, 250 );
-		Particle_Emitter::update( &fire_hadouken, 1.0 );
+		Particle_Emitter::spawn_Many( &magic_core, magic_core_min, magic_core_max, 30, 35, 55 );
+		Particle_Emitter::update( &magic_core, 1.0 );
 
-		Particle_Emitter::spawn_Many( &blood_drac, b_min, b_max, 2, 15, 25 );
+		Particle_Emitter::spawn_Many( &fire_hadouken_left, hado_left_min, hado_left_max, 1000, 200, 250 );
+		Particle_Emitter::update( &fire_hadouken_left, 1.0 );
+
+		Particle_Emitter::spawn_Many( &fire_hadouken_right, hado_right_min, hado_right_max, 1000, 200, 250 );
+		Particle_Emitter::update( &fire_hadouken_right, 1.0 );
+
+		Particle_Emitter::spawn_Many( &blood_drac, blood_min, blood_max, 2, 15, 25 );
 		Particle_Emitter::update( &blood_drac, 1.0 );
 
-		Agent::update( &mmx, 40.0 );
+		Particle_Emitter::spawn_Many( &fire_left, fire_left_min, fire_left_max, 10, 20, 30 );
+		Particle_Emitter::update( &fire_left, 1.0 );
+
+		Particle_Emitter::spawn_Many( &fire_right, fire_right_min, fire_right_max, 10, 20, 30 );
+		Particle_Emitter::update( &fire_right, 1.0 );
+
+		Particle_Emitter::spawn_Many( &fire_core, fire_core_min, fire_core_max, 10, 20, 30 );
+		Particle_Emitter::update( &fire_core, 1.0 );
+
+		if ( ending_state == false )
+		{
+			Agent::update( &mmx, 40.0 );
+			Agent::update( &ken, 40.0 );
+			Agent::update( &chun, 40.0 );
+			Agent::update( &charlotte, 40.0 );
+			Agent::update( &soma, 40.0 );
+			Agent::update( &dynamo, 40.0 );
+		}
+
 		Agent::collision_update( &mmx, 40.0, col_map );
 
-		Agent::update( &ken, 40.0 );
 		Agent::collision_update( &ken, 40.0, col_map );
-		fire_hadouken.emitter_pos.x = ken.pos.x;
-		fire_hadouken.emitter_pos.y = ken.pos.y + 50;
+		fire_hadouken_left.emitter_pos.x = ken.pos.x;
+		fire_hadouken_left.emitter_pos.y = ken.pos.y + 50;
+		fire_hadouken_right.emitter_pos.x = ken.pos.x + 135;
+		fire_hadouken_right.emitter_pos.y = ken.pos.y + 50;
 
-		Agent::update( &chun, 40.0 );
 		Agent::collision_update( &chun, 40.0, col_map );
 
-		Agent::update( &charlotte, 40.0 );
 		Agent::collision_update( &charlotte, 40.0, col_map );
 		magic.emitter_pos.x = charlotte.pos.x + 45;
-		magic.emitter_pos.y = charlotte.pos.y + 10;
+		magic.emitter_pos.y = charlotte.pos.y + 8;
+		magic_core.emitter_pos.x = charlotte.pos.x + 45;
+		magic_core.emitter_pos.y = charlotte.pos.y + 6;
 
-		Agent::update( &soma, 40.0 );
 		Agent::collision_update( &soma, 40.0, col_map );
 
-		Agent::update( &dynamo, 40.0 );
 		Agent::collision_update( &dynamo, 40.0, col_map );
 
 		//RENDER
@@ -771,6 +836,9 @@ int main( int argc, char **argv )
 		Particle_Emitter::draw( &blood_one, Game::renderer );
 		Particle_Emitter::draw( &blood_two, Game::renderer );
 		Particle_Emitter::draw( &fountain, Game::renderer );
+		Particle_Emitter::draw( &fire_left, Game::renderer );
+		Particle_Emitter::draw( &fire_right, Game::renderer );
+		Particle_Emitter::draw( &fire_core, Game::renderer );
 
 		//change agent states randomly if not in ending state
 		if ( ending_state == false )
@@ -1008,6 +1076,7 @@ int main( int argc, char **argv )
 			{
 				Animation::PlayLoop( &charlotte_other, charlotte.sprite_texture, charlotte.pos.x, charlotte.pos.y, charlotte_other.width * 2, charlotte_other.height * 2, current_time );
 				Particle_Emitter::draw( &magic, Game::renderer );
+				Particle_Emitter::draw( &magic_core, Game::renderer );
 				if ( charlotte.has_sound_played == false )
 				{
 					Mix_PlayChannel( -1, charlotte_magic, 0 );
@@ -1019,44 +1088,62 @@ int main( int argc, char **argv )
 			if ( soma.state == idle )
 			{
 				Animation::PlayLoop( &soma_idle, soma.sprite_texture, soma.pos.x, soma.pos.y, soma_idle.width * 2, soma_idle.height * 2, current_time );
+				soma.has_sound_played = false;
 			}
 			if(soma.state == moving_left )
 			{
 				Animation::PlayLoopFlipped( &soma_move, soma.sprite_texture, soma.pos.x, soma.pos.y, soma_move.width * 2, soma_move.height * 2, current_time );
+				soma.has_sound_played = false;
 			}
 			if ( soma.state == moving_right )
 			{
 				Animation::PlayLoop( &soma_move, soma.sprite_texture, soma.pos.x, soma.pos.y, soma_move.width * 2, soma_move.height * 2, current_time );
+				soma.has_sound_played = false;
 			}
 			if ( soma.state == dancing )
 			{
 				Animation::PlayLoop( &soma_dance, soma.sprite_texture, soma.pos.x, soma.pos.y, soma_dance.width * 2, soma_dance.height * 2, current_time );
+				if ( soma.has_sound_played == false )
+				{
+					Mix_PlayChannel( -1, chun_voice, 0 );
+					soma.has_sound_played = true;
+				}
 			}
 			if ( soma.state == other )
 			{
 				Animation::PlayLoop( &soma_other, soma.sprite_texture, soma.pos.x, soma.pos.y, soma_other.width * 2, soma_other.height * 2, current_time );
+				soma.has_sound_played = false;
 			}
 
 			//dynamo
 			if ( dynamo.state == idle )
 			{
 				Animation::PlayLoop( &dynamo_idle, dynamo.sprite_texture, dynamo.pos.x, dynamo.pos.y, dynamo_idle.width, dynamo_idle.height, current_time );
+				dynamo.has_sound_played = false;
 			}
 			if ( dynamo.state == moving_left )
 			{
 				Animation::PlayLoop( &dynamo_move, dynamo.sprite_texture, dynamo.pos.x, dynamo.pos.y, dynamo_move.width, dynamo_move.height, current_time );
+				dynamo.has_sound_played = false;
 			}
 			if ( dynamo.state == moving_right )
 			{
 				Animation::PlayLoopFlipped( &dynamo_move, dynamo.sprite_texture, dynamo.pos.x, dynamo.pos.y, dynamo_move.width, dynamo_move.height, current_time );
+				dynamo.has_sound_played = false;
 			}
 			if ( dynamo.state == dancing )
 			{
 				Animation::PlayLoop( &dynamo_dance, dynamo.sprite_texture, dynamo.pos.x, dynamo.pos.y, dynamo_dance.width, dynamo_dance.height, current_time );
+				if ( dynamo.has_sound_played == false )
+				{
+					Mix_PlayChannel( -1, ken_voice, 0 );
+					dynamo.has_sound_played = true;
+				}
 			}
 			if ( dynamo.state == other )
 			{
 				Animation::PlayLoop( &dynamo_other, dynamo.sprite_texture, dynamo.pos.x, dynamo.pos.y, dynamo_other.width, dynamo_other.height, current_time );
+				dynamo.has_sound_played = false;
 			}
 		}
 
@@ -1065,9 +1152,17 @@ int main( int argc, char **argv )
 			Animation::PlayLoop( &mmx_other, mmx.sprite_texture, mmx.pos.x, mmx.pos.y, mmx_other.width * 2, mmx_other.height * 2, current_time );
 			mmx.velocity.x = 0.0;
 
-			Animation::PlayLoop( &ken_dance, ken.sprite_texture, ken.pos.x, ken.pos.y, ken_other.width, ken_other.height, current_time );
+			if ( ken.pos.x > dracula.pos.x )
+			{
+				Animation::PlayLoop( &ken_dance, ken.sprite_texture, ken.pos.x, ken.pos.y, ken_other.width, ken_other.height, current_time );
+				Particle_Emitter::draw( &fire_hadouken_left, Game::renderer );
+			}
+			else
+			{
+				Animation::PlayLoopFlipped( &ken_dance, ken.sprite_texture, ken.pos.x, ken.pos.y, ken_other.width, ken_other.height, current_time );
+				Particle_Emitter::draw( &fire_hadouken_right, Game::renderer );
+			}
 			ken.velocity.x = 0.0;
-			Particle_Emitter::draw( &fire_hadouken, Game::renderer );
 
 			Animation::PlayLoop( &chun_other, chun.sprite_texture, chun.pos.x, chun.pos.y, chun_other.width, chun_other.height, current_time );
 			chun.velocity.x = 0.0;
@@ -1075,6 +1170,7 @@ int main( int argc, char **argv )
 			Animation::PlayLoop( &charlotte_other, charlotte.sprite_texture, charlotte.pos.x, charlotte.pos.y, charlotte_other.width * 2, charlotte_other.height * 2, current_time );
 			charlotte.velocity.x = 0.0;
 			Particle_Emitter::draw( &magic, Game::renderer );
+			Particle_Emitter::draw( &magic_core, Game::renderer );
 
 			Animation::PlayLoop( &soma_other, soma.sprite_texture, soma.pos.x, soma.pos.y, soma_other.width * 2, soma_other.height * 2, current_time );
 			soma.velocity.x = 0.0;
@@ -1089,6 +1185,7 @@ int main( int argc, char **argv )
 				Mix_PlayChannel( -1, dracula_sound, 0 );
 				dracula.has_sound_played = true;
 			}
+
 		}
 
 		//draw foreground particles
@@ -1097,6 +1194,7 @@ int main( int argc, char **argv )
 		Particle_Emitter::draw( &sparks_two, Game::renderer );
 		Particle_Emitter::draw( &sparks_three, Game::renderer );
 		Particle_Emitter::draw( &sparks_four, Game::renderer );
+		Particle_Emitter::draw( &fog_machine_ceiling, Game::renderer );
 
 		//flip buffers
 		SDL_RenderPresent( Game::renderer );
