@@ -1,0 +1,24 @@
+﻿  main.cpp
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(65): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(76): warning C4305: 'initializing': truncation from 'double' to 'float'
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(78): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(78): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(79): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(79): warning C4305: 'initializing': truncation from 'double' to 'float'
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(80): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(80): warning C4305: 'initializing': truncation from 'double' to 'float'
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(139): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(140): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(153): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(154): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(155): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(156): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(159): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(160): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(161): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(162): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(165): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(166): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(167): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\pong_final\pong_final\main.cpp(168): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Pong_Final.vcxproj -> E:\Users\Commander Shepard\Documents\GitHub\ComputerGraphics_ZacharyEdwards\Pong_Final\Debug\Pong_Final.exe

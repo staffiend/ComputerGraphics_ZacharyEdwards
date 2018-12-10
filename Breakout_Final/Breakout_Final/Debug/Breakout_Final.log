@@ -1,0 +1,30 @@
+﻿  main.cpp
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(44): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(45): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(46): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(47): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(100): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(101): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(104): warning C4305: '=': truncation from 'double' to 'float'
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(105): warning C4305: '=': truncation from 'double' to 'float'
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(116): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(120): warning C4305: '=': truncation from 'double' to 'float'
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(201): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(201): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(208): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(208): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(212): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(212): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(224): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(224): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(238): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(238): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(242): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(242): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(250): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(250): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(257): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(257): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(261): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\breakout_final\breakout_final\main.cpp(261): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Breakout_Final.vcxproj -> E:\Users\Commander Shepard\Documents\GitHub\ComputerGraphics_ZacharyEdwards\Breakout_Final\Debug\Breakout_Final.exe
