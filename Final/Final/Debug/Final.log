@@ -1,0 +1,15 @@
+﻿  main.cpp
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\final\final\main.cpp(74): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\final\final\main.cpp(75): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\final\final\main.cpp(76): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\final\final\main.cpp(78): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\final\final\main.cpp(79): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\final\final\main.cpp(80): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\final\final\main.cpp(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\final\final\main.cpp(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\final\final\main.cpp(84): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\final\final\main.cpp(108): warning C4305: '+=': truncation from 'double' to 'float'
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\final\final\main.cpp(314): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\final\final\main.cpp(316): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+e:\users\commander shepard\documents\github\computergraphics_zacharyedwards\final\final\main.cpp(320): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  Final.vcxproj -> E:\Users\Commander Shepard\Documents\GitHub\ComputerGraphics_ZacharyEdwards\Final\Debug\Final.exe
